@@ -2,9 +2,13 @@ extends CharacterBody2D
 
 class_name  Player
 
+signal  points_scored(points:int)
+
 enum PlayerMode {small, big, shooting}
 
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+
+const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 
 @onready var animated_sprite_2d = $AnimatedSprite2D as PlayerAnimatedSprite
 @onready var area_collision_shape_2d = $Area2D/AreaCollisionShape2D
@@ -14,8 +18,9 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var run_speed_damping = 0.5
 @export var speed = 400
 @export var jump_velocity = -350
+@export_group("")
 
-@export_group("Stomping enemeis")
+@export_group("Stomping enemies")
 @export var min_stomp_degree = 35
 @export var max_stomp_degree = 145
 @export var stonp_y_velocity = -150
@@ -57,16 +62,29 @@ func handle_enemy_collision(enemy: Enemy):
 	if enemy == null:
 		return 
 		
-	var angle_of_collision = rad_to_deg(position.angle_to_point(enemy.position))
-	
-	if angle_of_collision > min_stomp_degree && max_stomp_degree > angle_of_collision:
-		enemy.die()
-		on_enemy_stomped()
+	if is_instance_of(enemy , Koppa) and (enemy as Koppa).in_a_shell:
+		(enemy as Koppa).on_stomp(global_position)
 	else:
-		die()
+		var angle_of_collision = rad_to_deg(position.angle_to_point(enemy.position))
+		
+		if angle_of_collision > min_stomp_degree && max_stomp_degree > angle_of_collision:
+			enemy.die()
+			on_enemy_stomped()
+			spawn_points_label(enemy)
+		else:
+			die()
+		
+
+func spawn_points_label(enemy):
+	var points_label = POINTS_LABEL.instantiate()
+	points_label.position = enemy.position + Vector2(-20 , 20)
+	get_tree().root.add_child(points_label)
+	points_scored.emit(100)
+
 		
 func on_enemy_stomped():
 	velocity.y = stonp_y_velocity
 		
 func die():
 	print("Die")
+	
