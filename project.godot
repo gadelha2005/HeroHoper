@@ -13,6 +13,7 @@ config_version=5
 config/name="Projeto2"
 run/main_scene="res://cenas/main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
+boot_splash/bg_color=Color(0.221595, 0.229299, 0.435814, 1)
 config/icon="res://icon.svg"
 
 [display]
@@ -57,4 +58,4 @@ shoot={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-environment/defaults/default_clear_color=Color(9.62615e-07, 0.332735, 0.431634, 1)
+environment/defaults/default_clear_color=Color(0.235294, 0.627451, 1, 1)

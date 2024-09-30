@@ -15,6 +15,14 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 @export var speed = 400
 @export var jump_velocity = -350
 
+@export_group("Stomping enemeis")
+@export var min_stomp_degree = 35
+@export var max_stomp_degree = 145
+@export var stonp_y_velocity = -150
+@export_group("")
+
+
+
 var player_mode = PlayerMode.small
 
 func _process(delta):
@@ -39,3 +47,26 @@ func _process(delta):
 	
 	move_and_slide()
 	
+
+
+func _on_area_2d_area_entered(area):
+	if area is Enemy:
+		handle_enemy_collision(area)
+		
+func handle_enemy_collision(enemy: Enemy):
+	if enemy == null:
+		return 
+		
+	var angle_of_collision = rad_to_deg(position.angle_to_point(enemy.position))
+	
+	if angle_of_collision > min_stomp_degree && max_stomp_degree > angle_of_collision:
+		enemy.die()
+		on_enemy_stomped()
+	else:
+		die()
+		
+func on_enemy_stomped():
+	velocity.y = stonp_y_velocity
+		
+func die():
+	print("Die")
