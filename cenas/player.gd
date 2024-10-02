@@ -11,7 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 
 @onready var animated_sprite_2d = $AnimatedSprite2D as PlayerAnimatedSprite
-@onready var area_dd = $Area2D
+@onready var area_2d = $Area2D
 @onready var area_collision_shape_2d = $Area2D/AreaCollisionShape2D
 @onready var body_collision_shape_2d = $BodyCollisionShape2D
 
@@ -103,6 +103,8 @@ func die():
 	if player_mode == PlayerMode.small:
 		is_dead = true
 		animated_sprite_2d.play("death")
+		area_2d.set_collision_mask_value(3 , false)
+		set_collision_layer_value(1 , false)
 		set_physics_process(false)
 		
 		var death_tween = get_tree().create_tween()
