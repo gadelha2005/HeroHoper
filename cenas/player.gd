@@ -26,15 +26,24 @@ const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 @export var stonp_y_velocity = -150
 @export_group("")
 
-
+@export_group("Camera sync")
+@export var camera_sync: Camera2D
+@export var should_camera_sync: bool = true
+@export_group("")
 
 var player_mode = PlayerMode.small
 
-func _process(delta):
+func _physics_process(delta):
+	
+	var camera_left_bound = camera_sync.global_position.x - camera_sync.get_viewport_rect().size.x / 2 / camera_sync.zoom.x
 	
 	if not is_on_floor():
 		velocity.y += gravity * delta
 		
+	if global_position.x < camera_left_bound + 8 && sign(velocity.x) == -1: 
+		velocity = Vector2.ZERO
+		return	
+	
 	if  Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
 		
@@ -52,7 +61,9 @@ func _process(delta):
 	
 	move_and_slide()
 	
-
+func _process(delta):
+	if global_position.x > camera_sync.global_position.x && should_camera_sync:
+		camera_sync.global_position.x = global_position.x
 
 func _on_area_2d_area_entered(area):
 	if area is Enemy:
