@@ -11,6 +11,7 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 
 @onready var animated_sprite_2d = $AnimatedSprite2D as PlayerAnimatedSprite
+@onready var area_dd = $Area2D
 @onready var area_collision_shape_2d = $Area2D/AreaCollisionShape2D
 @onready var body_collision_shape_2d = $BodyCollisionShape2D
 
@@ -23,7 +24,7 @@ const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 @export_group("Stomping enemies")
 @export var min_stomp_degree = 35
 @export var max_stomp_degree = 145
-@export var stonp_y_velocity = -150
+@export var stomp_y_velocity = -150
 @export_group("")
 
 @export_group("Camera sync")
@@ -32,6 +33,8 @@ const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 @export_group("")
 
 var player_mode = PlayerMode.small
+
+var is_dead = false
 
 func _physics_process(delta):
 	
@@ -57,7 +60,7 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x , 0 , speed * delta)
 	
-	animated_sprite_2d.trigger_anmation(velocity , direction , player_mode)
+	animated_sprite_2d.trigger_animation(velocity , direction , player_mode)
 	
 	move_and_slide()
 	
@@ -70,7 +73,7 @@ func _on_area_2d_area_entered(area):
 		handle_enemy_collision(area)
 		
 func handle_enemy_collision(enemy: Enemy):
-	if enemy == null:
+	if enemy == null && is_dead:
 		return 
 		
 	if is_instance_of(enemy , Koppa) and (enemy as Koppa).in_a_shell:
@@ -94,8 +97,17 @@ func spawn_points_label(enemy):
 
 		
 func on_enemy_stomped():
-	velocity.y = stonp_y_velocity
+	velocity.y = stomp_y_velocity
 		
 func die():
-	print("Die")
+	if player_mode == PlayerMode.small:
+		is_dead = true
+		animated_sprite_2d.play("death")
+		set_physics_process(false)
+		
+		var death_tween = get_tree().create_tween()
+		death_tween.tween_property(self ,"position" , position + Vector2(0 , -48) , .5)
+		death_tween.chain().tween_property(self ,"position" , position + Vector2(0 , 500) , 1)
+		death_tween.tween_callback(func (): get_tree().reload_current_scene())
+	
 	
