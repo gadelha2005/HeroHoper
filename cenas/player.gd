@@ -17,7 +17,7 @@ const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 
 @export_group("Locomotion")
 @export var run_speed_damping = 0.5
-@export var speed = 400
+@export var speed = 300
 @export var jump_velocity = -350
 @export_group("")
 
@@ -45,7 +45,7 @@ func _physics_process(delta):
 		
 	if global_position.x < camera_left_bound + 8 && sign(velocity.x) == -1: 
 		velocity = Vector2.ZERO
-		return	
+		return 
 	
 	if  Input.is_action_just_pressed("jump") and is_on_floor():
 		velocity.y = jump_velocity
@@ -61,6 +61,10 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x , 0 , speed * delta)
 	
 	animated_sprite_2d.trigger_animation(velocity , direction , player_mode)
+	
+	var collision = get_last_slide_collision()
+	if collision != null:
+		handle_movement_collision(collision)
 	
 	move_and_slide()
 	
@@ -113,3 +117,10 @@ func die():
 		death_tween.tween_callback(func (): get_tree().reload_current_scene())
 	
 	
+func handle_movement_collision(collision: KinematicCollision2D):
+	if collision.get_collider() is Block:
+		var collision_angle = rad_to_deg(collision.get_angle())
+		if roundf(collision_angle) == 180:
+			(collision.get_collider() as Block).bump(player_mode)
+
+

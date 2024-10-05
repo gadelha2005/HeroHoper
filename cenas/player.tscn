@@ -266,7 +266,7 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
-collision_mask = 14
+collision_mask = 30
 script = ExtResource("1_cjsgh")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -275,7 +275,7 @@ animation = &"death"
 script = ExtResource("11_ctu00")
 
 [node name="Area2D" type="Area2D" parent="."]
-collision_mask = 6
+collision_mask = 22
 
 [node name="AreaCollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = ExtResource("2_gafk2")

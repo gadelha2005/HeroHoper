@@ -10,15 +10,15 @@
 [ext_resource type="Texture2D" uid="uid://j6grr7g688fn" path="res://Assets Super Mario Bros/Sprites/Bush3.png" id="5_wedfw"]
 [ext_resource type="Texture2D" uid="uid://cs22aou1r23tp" path="res://Free Pixel Art Forest/Free Pixel Art Forest/PNG/Background layers/Layer_0000_9.png" id="5_yufbl"]
 [ext_resource type="Texture2D" uid="uid://cdp0d1a4cvakq" path="res://Assets Super Mario Bros/Sprites/PipeBottom.png" id="6_d7jku"]
-[ext_resource type="PackedScene" uid="uid://c6u6yduve5tsk" path="res://cenas/goomba.tscn" id="6_eeipy"]
 [ext_resource type="Texture2D" uid="uid://ca2vqovtyc6q6" path="res://Free Pixel Art Forest/Free Pixel Art Forest/PNG/Background layers/Layer_0002_7.png" id="6_qyr0e"]
 [ext_resource type="Texture2D" uid="uid://bao1bjv8wwe2f" path="res://Free/Terrain/Terrain (16x16).png" id="7_iowrw"]
-[ext_resource type="PackedScene" uid="uid://bqelves111gre" path="res://cenas/koopa.tscn" id="7_nkdg2"]
 [ext_resource type="Texture2D" uid="uid://8hx0hwj6028f" path="res://Assets Super Mario Bros/Sprites/PipeConnection.png" id="7_y5xgx"]
 [ext_resource type="Texture2D" uid="uid://b5sqfy41h20ks" path="res://Assets Super Mario Bros/Sprites/PipeTop.png" id="8_ryoef"]
 [ext_resource type="Texture2D" uid="uid://cq6tqakba8cj0" path="res://Assets Super Mario Bros/Sprites/Cloud1.png" id="9_qkitv"]
 [ext_resource type="Texture2D" uid="uid://clh4o85nqf188" path="res://Assets Super Mario Bros/Sprites/Cloud2.png" id="10_k8gdu"]
 [ext_resource type="Texture2D" uid="uid://bbd1cchxb20u2" path="res://Assets Super Mario Bros/Sprites/Bush1.png" id="14_e2rg3"]
+[ext_resource type="PackedScene" uid="uid://c2khoeaoo3wah" path="res://cenas/brick.tscn" id="18_dnimg"]
+[ext_resource type="PackedScene" uid="uid://co23amcvam0sy" path="res://cenas/mystery_box.tscn" id="19_c6id6"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_suaxq"]
 texture = ExtResource("1_l631d")
@@ -4441,10 +4441,10 @@ layer_1/tile_data = PackedInt32Array()
 position = Vector2(-184, 9)
 camera_sync = NodePath("../Camera2D")
 
-[node name="Enemies" type="Node" parent="."]
+[node name="Brick" parent="." instance=ExtResource("18_dnimg")]
+position = Vector2(-124, -37)
 
-[node name="Goomba1" parent="Enemies" instance=ExtResource("6_eeipy")]
-position = Vector2(137, 10)
-
-[node name="Koopa1" parent="Enemies" instance=ExtResource("7_nkdg2")]
-position = Vector2(169, 5)
+[node name="MysteryBox" parent="." instance=ExtResource("19_c6id6")]
+position = Vector2(-22, -38)
+collision_layer = 16
+collision_mask = 13
