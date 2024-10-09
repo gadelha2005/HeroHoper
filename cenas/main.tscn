@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://bwbcbn3pdbn61"]
+[gd_scene load_steps=39 format=3 uid="uid://bwbcbn3pdbn61"]
 
 [ext_resource type="Texture2D" uid="uid://bh2i2pbd72n30" path="res://Assets Super Mario Bros/Sprites/GroundBlock.png" id="1_l631d"]
 [ext_resource type="Texture2D" uid="uid://8as4lix1a8pr" path="res://Assets Super Mario Bros/Sprites/HardBlock.png" id="2_o5vcs"]
@@ -19,6 +19,8 @@
 [ext_resource type="Texture2D" uid="uid://bbd1cchxb20u2" path="res://Assets Super Mario Bros/Sprites/Bush1.png" id="14_e2rg3"]
 [ext_resource type="PackedScene" uid="uid://c2khoeaoo3wah" path="res://cenas/brick.tscn" id="18_dnimg"]
 [ext_resource type="PackedScene" uid="uid://co23amcvam0sy" path="res://cenas/mystery_box.tscn" id="19_c6id6"]
+[ext_resource type="PackedScene" uid="uid://c6u6yduve5tsk" path="res://cenas/goomba.tscn" id="20_bwm4o"]
+[ext_resource type="Script" path="res://cenas/level_manager.gd" id="21_va0hv"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_suaxq"]
 texture = ExtResource("1_l631d")
@@ -4448,3 +4450,21 @@ position = Vector2(-124, -37)
 position = Vector2(-22, -38)
 collision_layer = 16
 collision_mask = 13
+bonus_type = 2
+
+[node name="Goomba" parent="." instance=ExtResource("20_bwm4o")]
+position = Vector2(-125, -52)
+horizontal_speed = 0
+
+[node name="Goomba2" parent="." instance=ExtResource("20_bwm4o")]
+position = Vector2(-54, 10)
+horizontal_speed = 0
+
+[node name="Brick2" parent="." instance=ExtResource("18_dnimg")]
+position = Vector2(-140, -37)
+
+[node name="Brick3" parent="." instance=ExtResource("18_dnimg")]
+position = Vector2(-156, -37)
+
+[node name="LevelManager" type="Node" parent="." groups=["level_manager"]]
+script = ExtResource("21_va0hv")

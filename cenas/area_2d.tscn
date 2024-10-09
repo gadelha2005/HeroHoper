@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cg73ygsrbhywv"]
+
+[ext_resource type="Texture2D" uid="uid://80dij0rowpdx" path="res://Assets Super Mario Bros/Sprites/MagicMushroom.png" id="1_350qo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_npt27"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_os477"]
+
+[node name="Area2D" type="Area2D"]
+collision_mask = 32
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_350qo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_npt27")
+
+[node name="ShapeCast2D" type="ShapeCast2D" parent="."]
+shape = SubResource("RectangleShape2D_os477")
+target_position = Vector2(0, 0)
+collision_mask = 18
+collide_with_areas = true

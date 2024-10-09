@@ -9,6 +9,8 @@ enum PlayerMode {small, big, shooting}
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
 const POINTS_LABEL = preload("res://cenas/points_label.tscn")
+const SMALL_MARIO = preload("res://Resources/CollisionShapes/small_mario.tres")
+const BIG_MARIO_COLLISION_SHAPE = preload("res://Resources/CollisionShapes/big_mario_collision_shape.tres")
 
 @onready var animated_sprite_2d = $AnimatedSprite2D as PlayerAnimatedSprite
 @onready var area_2d = $Area2D
@@ -17,7 +19,7 @@ const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 
 @export_group("Locomotion")
 @export var run_speed_damping = 0.5
-@export var speed = 300
+@export var speed = 250
 @export var jump_velocity = -350
 @export_group("")
 
@@ -75,6 +77,13 @@ func _process(delta):
 func _on_area_2d_area_entered(area):
 	if area is Enemy:
 		handle_enemy_collision(area)
+	if area is Shroom:
+			handle_shroom_collision(area)
+			area.queue_free()
+	if area is ShootingFlower:
+		handle_flower_collision()
+		area.queue_free()
+		
 		
 func handle_enemy_collision(enemy: Enemy):
 	if enemy == null && is_dead:
@@ -92,6 +101,18 @@ func handle_enemy_collision(enemy: Enemy):
 		else:
 			die()
 		
+func handle_shroom_collision(area: Node2D):
+	if player_mode == PlayerMode.small:
+		set_physics_process(false)
+		animated_sprite_2d.play("small_to_big")
+		set_collision_shapes(false)
+		
+func handle_flower_collision():
+	set_physics_process(false)
+	var animation_name = "small_to_shooting" if player_mode == PlayerMode.small else "big_to_shooting"
+	animated_sprite_2d.play(animation_name)
+	set_collision_shapes(false)
+	
 
 func spawn_points_label(enemy):
 	var points_label = POINTS_LABEL.instantiate()
@@ -116,6 +137,9 @@ func die():
 		death_tween.chain().tween_property(self ,"position" , position + Vector2(0 , 500) , 1)
 		death_tween.tween_callback(func (): get_tree().reload_current_scene())
 	
+	else:
+		big_to_small()
+	
 	
 func handle_movement_collision(collision: KinematicCollision2D):
 	if collision.get_collider() is Block:
@@ -123,4 +147,14 @@ func handle_movement_collision(collision: KinematicCollision2D):
 		if roundf(collision_angle) == 180:
 			(collision.get_collider() as Block).bump(player_mode)
 
+func set_collision_shapes(is_small: bool):
+	var collision_shape = SMALL_MARIO if is_small else BIG_MARIO_COLLISION_SHAPE
+	area_collision_shape_2d.set_deferred("shape" , collision_shape)
+	body_collision_shape_2d.set_deferred("shape" , collision_shape)
 
+func big_to_small():
+	set_collision_layer_value(1 , false)
+	set_physics_process(false)
+	var animation_name = "small_to_big" if player_mode == PlayerMode.big else "small_to_shooting"
+	animated_sprite_2d.play(animation_name , 1.0 , true)
+	set_collision_shapes(true)
