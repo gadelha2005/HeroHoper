@@ -11,11 +11,15 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 const POINTS_LABEL = preload("res://cenas/points_label.tscn")
 const SMALL_MARIO = preload("res://Resources/CollisionShapes/small_mario.tres")
 const BIG_MARIO_COLLISION_SHAPE = preload("res://Resources/CollisionShapes/big_mario_collision_shape.tres")
+const FIREBALL_SCENE = preload("res://cenas/fireball.tscn")
+
 
 @onready var animated_sprite_2d = $AnimatedSprite2D as PlayerAnimatedSprite
 @onready var area_2d = $Area2D
 @onready var area_collision_shape_2d = $Area2D/AreaCollisionShape2D
 @onready var body_collision_shape_2d = $BodyCollisionShape2D
+@onready var shooting_point = $ShootingPoint
+
 
 @export_group("Locomotion")
 @export var run_speed_damping = 0.5
@@ -61,9 +65,12 @@ func _physics_process(delta):
 		velocity.x = lerp(velocity.x , speed * direction, run_speed_damping * delta)
 	else:
 		velocity.x = move_toward(velocity.x , 0 , speed * delta)
-	
-	animated_sprite_2d.trigger_animation(velocity , direction , player_mode)
-	
+		
+	if Input.is_action_just_pressed("shoot") && player_mode == PlayerMode.shooting:
+		shoot()
+	else:
+		animated_sprite_2d.trigger_animation(velocity , direction , player_mode)
+		
 	var collision = get_last_slide_collision()
 	if collision != null:
 		handle_movement_collision(collision)
@@ -158,3 +165,13 @@ func big_to_small():
 	var animation_name = "small_to_big" if player_mode == PlayerMode.big else "small_to_shooting"
 	animated_sprite_2d.play(animation_name , 1.0 , true)
 	set_collision_shapes(true)
+	
+func shoot():
+	animated_sprite_2d.play("shoot")
+	set_physics_process(false)
+	
+	var fireball = FIREBALL_SCENE.instantiate()
+	fireball.direction = sign(animated_sprite_2d.scale.x)
+	fireball.global_position = shooting_point.global_position
+	get_tree().root.add_child(fireball)	
+	

@@ -38,6 +38,9 @@ func _on_animation_finished():
 	if animation == "small_to_shooting" || animation == "big_to_shooting":
 		reset_player_properties()
 		get_parent().player_mode = Player.PlayerMode.shooting
+	
+	if animation == "shoot":
+		get_parent().set_physics_process(true)
 
 func reset_player_properties():
 	offset = Vector2.ZERO

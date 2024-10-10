@@ -1,4 +1,4 @@
-[gd_scene load_steps=39 format=3 uid="uid://bwbcbn3pdbn61"]
+[gd_scene load_steps=40 format=3 uid="uid://bwbcbn3pdbn61"]
 
 [ext_resource type="Texture2D" uid="uid://bh2i2pbd72n30" path="res://Assets Super Mario Bros/Sprites/GroundBlock.png" id="1_l631d"]
 [ext_resource type="Texture2D" uid="uid://8as4lix1a8pr" path="res://Assets Super Mario Bros/Sprites/HardBlock.png" id="2_o5vcs"]
@@ -21,6 +21,7 @@
 [ext_resource type="PackedScene" uid="uid://co23amcvam0sy" path="res://cenas/mystery_box.tscn" id="19_c6id6"]
 [ext_resource type="PackedScene" uid="uid://c6u6yduve5tsk" path="res://cenas/goomba.tscn" id="20_bwm4o"]
 [ext_resource type="Script" path="res://cenas/level_manager.gd" id="21_va0hv"]
+[ext_resource type="PackedScene" uid="uid://bqelves111gre" path="res://cenas/koopa.tscn" id="22_j4h4o"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_suaxq"]
 texture = ExtResource("1_l631d")
@@ -4468,3 +4469,7 @@ position = Vector2(-156, -37)
 
 [node name="LevelManager" type="Node" parent="." groups=["level_manager"]]
 script = ExtResource("21_va0hv")
+
+[node name="Koopa" parent="." instance=ExtResource("22_j4h4o")]
+position = Vector2(119, 7)
+horizontal_speed = 0
