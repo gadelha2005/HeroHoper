@@ -132,7 +132,7 @@ func on_enemy_stomped():
 	velocity.y = stomp_y_velocity
 		
 func die():
-	if player_mode == PlayerMode.small:
+	if player_mode == PlayerMode.small || player_mode == PlayerMode.shooting:
 		is_dead = true
 		animated_sprite_2d.play("death")
 		area_2d.set_collision_mask_value(3 , false)

@@ -52,7 +52,7 @@ func spawn_coin():
 	var coin = coin_scene.instantiate()
 	coin.global_position = global_position + Vector2(0 , -16)
 	get_tree().root.add_child(coin)
-	get_tree().get_first_node_in_group("level_manager").on_coin_collected()
+	get_tree().get_first_node_in_group("level_manager"). on_coin_collected()
 
 func spawn_flower():
 	var flower = shooting_flower_scene.instantiate()
