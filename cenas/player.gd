@@ -23,7 +23,7 @@ const FIREBALL_SCENE = preload("res://cenas/fireball.tscn")
 
 @export_group("Locomotion")
 @export var run_speed_damping = 0.5
-@export var speed = 250
+@export var speed = 200
 @export var jump_velocity = -350
 @export_group("")
 
@@ -85,8 +85,8 @@ func _on_area_2d_area_entered(area):
 	if area is Enemy:
 		handle_enemy_collision(area)
 	if area is Shroom:
-			handle_shroom_collision(area)
-			area.queue_free()
+		handle_shroom_collision(area)
+		area.queue_free()
 	if area is ShootingFlower:
 		handle_flower_collision()
 		area.queue_free()

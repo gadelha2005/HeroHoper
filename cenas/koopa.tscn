@@ -30,7 +30,7 @@ animations = [{
 
 [node name="Koopa" type="Area2D"]
 collision_layer = 4
-collision_mask = 9
+collision_mask = 29
 script = ExtResource("1_2kvbq")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -46,3 +46,4 @@ target_position = Vector2(0, 12)
 collision_mask = 18
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

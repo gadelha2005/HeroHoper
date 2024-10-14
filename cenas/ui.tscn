@@ -31,4 +31,4 @@ text = "POINTS: 0000 "
 layout_mode = 2
 theme_override_fonts/font = ExtResource("2_d37q4")
 theme_override_font_sizes/font_size = 20
-text = "      COINS: 0000"
+text = "  "

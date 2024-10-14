@@ -36,6 +36,8 @@ size = Vector2(16, 16)
 
 [node name="MysteryBox" type="StaticBody2D"]
 z_index = 2
+collision_layer = 16
+collision_mask = 13
 script = ExtResource("1_uwu54")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

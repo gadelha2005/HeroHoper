@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvn82xatce36v"]
+
+[ext_resource type="Texture2D" uid="uid://75uhio5lh74v" path="res://Assets Super Mario Bros/Sprites/Castle.png" id="1_muk7y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clt56"]
+size = Vector2(16, 30)
+
+[node name="Castle" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_muk7y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_clt56")

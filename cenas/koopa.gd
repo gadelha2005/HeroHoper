@@ -32,3 +32,11 @@ func on_stomp(player_position: Vector2):
 	var movement_direction = 1 if player_position.x <= global_position.x else -1
 	horizontal_speed = -movement_direction * slide_speed
 
+
+
+
+
+
+func _on_body_entered(body):
+	if body is Pipe:
+		horizontal_speed *= -1
