@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://djsbsdbby78k7"]
+
+[ext_resource type="Script" path="res://cenas/passar_fase.gd" id="1_nneu8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tx8w1"]
+size = Vector2(20, 29)
+
+[node name="PassarFase" type="Area2D"]
+collision_layer = 0
+script = ExtResource("1_nneu8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4.5)
+shape = SubResource("RectangleShape2D_tx8w1")

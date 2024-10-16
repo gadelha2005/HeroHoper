@@ -42,6 +42,9 @@ var player_mode = PlayerMode.small
 
 var is_dead = false
 
+var can_shoot = true  
+var timer_id: Timer  
+
 func _physics_process(delta):
 	
 	var camera_left_bound = camera_sync.global_position.x - camera_sync.get_viewport_rect().size.x / 2 / camera_sync.zoom.x
@@ -167,11 +170,19 @@ func big_to_small():
 	set_collision_shapes(true)
 	
 func shoot():
-	animated_sprite_2d.play("shoot")
-	set_physics_process(false)
-	
-	var fireball = FIREBALL_SCENE.instantiate()
-	fireball.direction = sign(animated_sprite_2d.scale.x)
-	fireball.global_position = shooting_point.global_position
-	get_tree().root.add_child(fireball)	
-	
+	if can_shoot:
+		animated_sprite_2d.play("shoot")
+		set_physics_process(false)
+		
+		var fireball = FIREBALL_SCENE.instantiate()
+		fireball.direction = sign(animated_sprite_2d.scale.x)
+		fireball.global_position = shooting_point.global_position
+		get_tree().root.add_child(fireball)	
+		
+		can_shoot = false
+		
+		$Timer.start()
+
+
+func _on_timer_timeout():
+	can_shoot = true

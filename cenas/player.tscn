@@ -286,6 +286,10 @@ shape = ExtResource("2_gafk2")
 [node name="ShootingPoint" type="Marker2D" parent="."]
 position = Vector2(8, -5)
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+
 [connection signal="animation_finished" from="AnimatedSprite2D" to="AnimatedSprite2D" method="_on_animation_finished"]
 [connection signal="frame_changed" from="AnimatedSprite2D" to="AnimatedSprite2D" method="_on_frame_changed"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
