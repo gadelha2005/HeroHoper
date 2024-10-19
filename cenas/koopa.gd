@@ -34,9 +34,10 @@ func on_stomp(player_position: Vector2):
 
 
 
-
+var direction = 1
 
 
 func _on_body_entered(body):
 	if body is Pipe:
 		horizontal_speed *= -1
+		$AnimatedSprite2D.flip_h = ! $AnimatedSprite2D.flip_h

@@ -145,7 +145,7 @@ func die():
 		var death_tween = get_tree().create_tween()
 		death_tween.tween_property(self ,"position" , position + Vector2(0 , -48) , .5)
 		death_tween.chain().tween_property(self ,"position" , position + Vector2(0 , 500) , 1)
-		death_tween.tween_callback(func (): get_tree().reload_current_scene())
+		death_tween.tween_callback(func (): get_tree().change_scene_to_file("res://cenas/lose_scene.tscn"))
 	
 	else:
 		big_to_small()

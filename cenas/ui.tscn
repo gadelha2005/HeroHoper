@@ -1,7 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://0dfhmn7tutrk"]
+[gd_scene load_steps=4 format=3 uid="uid://0dfhmn7tutrk"]
 
 [ext_resource type="Script" path="res://cenas/ui.gd" id="1_45a6d"]
 [ext_resource type="FontFile" uid="uid://dm3ch1vmt4ixr" path="res://Assets Super Mario Bros/Fonts/font.ttf" id="2_d37q4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vjwsc"]
+bg_color = Color(1, 0.33647, 0.330812, 1)
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource("1_45a6d")
@@ -32,3 +35,32 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_d37q4")
 theme_override_font_sizes/font_size = 20
 text = "  "
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+visible = false
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Panel" type="Panel" parent="MarginContainer/CenterContainer"]
+clip_contents = true
+custom_minimum_size = Vector2(300, 300)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vjwsc")
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -38.0
+offset_top = -11.5
+offset_right = 38.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 0.00392157, 1)
+theme_override_colors/font_shadow_color = Color(0.517549, 0.409294, 0, 1)
+theme_override_colors/font_outline_color = Color(0.901394, 0.2785, 0.219976, 1)
+text = "YOU WIN!"
